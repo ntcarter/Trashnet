@@ -4,3 +4,7 @@ responsive so making it to small will break some of it. I will get that fix in t
 AJAX
 If you make your php file data then you will not have to change anything in the ajax file.  If you do not name in data.php then in line 4 in the ajax.js you will have to change the name to
 whatever you file is.
+
+```javascript
+ajax.open("GET", "data.php", true);
+```
