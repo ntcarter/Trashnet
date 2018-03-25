@@ -36,7 +36,7 @@ body::-webkit-scrollbar-thumb {
 	*zoom: 1;
 }
 
-/**Nav and Header Styles**/
+/********************************************************Nav and Header Styles*******************************************************/
 .nav-header{
 	width: 100%;
 	height: 200px;
@@ -98,9 +98,9 @@ body::-webkit-scrollbar-thumb {
 	font-family: 'Montserrat', sans-serif;
 	color: #454545;
 }
-/**End of Nav and Header Styles**/
+/*****************************************************End of Nav and Header Styles**************************************************/
 
-/*Form styling*/
+/********************************************************************Form styling******************************************************/
 
 .contact-section{
 	width: 100%;
@@ -162,9 +162,9 @@ textarea{
     cursor: pointer;
 }
 
-/*End of form*/
+/*******************************************************End of form****************************************************************/
 
-/*Footer style*/
+/*******************************************************Footer style****************************************************************/
 
 footer{
     width: 100%;
@@ -194,9 +194,9 @@ footer ul li a{
     font-size: .8em;
 }
 
-/*End of Footer*/
+/***********************************************End of Footer************************************************************************/
 
-/*Basic style for the main body*/
+/**********************************************Basic style for the main body**********************************************************/
 
 .main-body{
     width: 100%;
@@ -206,6 +206,9 @@ footer ul li a{
     line-height: 1.75;
 }
 
+/**********************************************END of Basic style for the main body****************************************************/
+
+/*************************************************People box style********************************************************************/
 .people{
     width: 480px;
     height: 200px;
@@ -244,6 +247,7 @@ footer ul li a{
     margin: 0;
     font-size: .8em;
 }
+/*************************************************END of People box style**************************************************************/
 
 /*TEMPAROLLY*/
 .main-body h1{
@@ -255,6 +259,36 @@ footer ul li a{
     text-align: center;
 }
 /*End of TEMPAROLLY*/
+
+/*********************************************************Stats Page************************************************************/
+
+/******************Table Style*****************/
+.table-body{
+	padding-top: 20px;
+}
+
+.table-body table{
+	margin: 0 auto;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table-body th{
+	background-color: #FF7A14;
+	color: #fff;
+}
+
+.table-body td, th{
+	text-align: left;
+	padding: 10px;
+	/*border: 1px solid #FF7A14;*/
+}
+
+.table-body tr:nth-child(even){
+	background-color: #FF7A14;
+	color: #fff;
+}
+/******************END OF Table Style*****************/
 
 
 
