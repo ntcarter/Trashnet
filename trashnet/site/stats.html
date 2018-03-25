@@ -17,7 +17,7 @@
 			<ul class="clearfix">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="about.html">About Us</a></li>
-				<li><a href="stats.html">Stats</a></li>
+				<li><a href="stats.php">Stats</a></li>
 				<li><a href="map.html">Map</a></li>
 			</ul>
 		</div>
@@ -30,7 +30,19 @@
 		<h1 class="main-title">Stats</h1>
 		
 		<div class="main-body">
-		
+				<div class="table-body">
+					<table>
+						<tr>
+							<th>ID</th>
+							<th>Frequency</th>
+							<th>Location</th>
+							<th>Data</th>
+						</tr>
+						<tbody id="data">
+							
+						</tbody>
+					</table>
+				</div>
 		</div>
 			
 	</div>
@@ -48,5 +60,7 @@
         </div>
     </footer>
 	<!--End of Footer-->
+	
+	<script src="js/ajax.js"></script>
 </body>
 </html>
