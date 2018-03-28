@@ -1,0 +1,37 @@
+The database is currently hosted at trashnet.ece.iastate.edu
+the user Logan has all privilages on this database.
+The password for user Logan is ROFLdb!789
+
+So far a databse named 'test' has been created with 2 tables: events and devices
+
+Here are the statments that were used to create these tables;
+
+CREATE TABLE devices (
+	ID int NOT NULL AUTO_INCREMENT,
+	Location varchar(255) NOT NULL,
+    DateInstalled date NOT NULL,
+    PRIMARY KEY (ID)
+);
+
+
+ CREATE TABLE events (
+	ID int NOT NULL AUTO_INCREMENT,
+	DeviceID int NOT NULL,
+	EventName varchar(255) NOT NULL,
+    OccuranceTime datetime NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (DeviceID) REFERENCES devices(ID)
+);
+
+These tables are by no means final, however if you wish to change these tables please either let get everyone in the group's approval or create a new database with the modified tables.
+
+to add a row to the devices table:
+
+insert into devices (Location , DateInstalled)
+VALUES('East Side','2018-01-24');
+
+to add a row to the events table:
+
+
+insert into events (DeviceID, EventName, OccuranceTime)
+VALUES(3,'trash recieved', '2018-1-26 03:23:45');
