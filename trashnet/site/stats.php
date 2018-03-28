@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Stats</title>
 	<link rel="stylesheet" href="css/styles.css">
+	<scipt
 </head>
 
 <body>
@@ -25,24 +26,55 @@
 	<!--End of header and navigation-->
 	
 	<!--Body-->
-	<div class="wrapper">
+	<div class="wrapper-stats">
 		
 		<h1 class="main-title">Stats</h1>
 		
 		<div class="main-body">
-				<div class="table-body">
-					<table>
-						<tr>
-							<th>ID</th>
-							<th>Frequency</th>
-							<th>Location</th>
-							<th>Data</th>
-						</tr>
-						<tbody id="data">
-							
-						</tbody>
-					</table>
+			<div class="table-body">
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>Frequency</th>
+						<th>Location</th>
+						<th>Date</th>
+						<th>Fullness</th>
+					</tr>
+					<tbody id="data">
+
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="more-info">
+				<div class="graph-section">
+				
+					<div class="table-body-more-info">
+						<table>
+							<tr>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Time</th>
+							</tr>
+							<tbody id="">
+
+							</tbody>
+						</table>
+					</div>
+					
+					<div class="graph1">
+						<canvas id="myChart1"></canvas>
+					</div>
+					
+					<div class="graph2">
+						<canvas id="myChart2"></canvas>
+					</div>
 				</div>
+				
+				<div class="map-section">
+					
+				</div>
+			</div>
 		</div>
 			
 	</div>
@@ -60,7 +92,9 @@
         </div>
     </footer>
 	<!--End of Footer-->
-	
 	<script src="js/ajax.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src="js/graph.js"></script>
 </body>
 </html>
