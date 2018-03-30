@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Stats</title>
 	<link rel="stylesheet" href="css/styles.css">
-	<scipt
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -35,9 +35,9 @@
 				<table>
 					<tr>
 						<th>ID</th>
+						<th>Longitude</th>
+						<th>Latitude</th>
 						<th>Frequency</th>
-						<th>Location</th>
-						<th>Date</th>
 						<th>Fullness</th>
 					</tr>
 					<tbody id="data">
