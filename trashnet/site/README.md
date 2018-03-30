@@ -8,6 +8,6 @@ whatever you file is.
 ```javascript
 ajax.open("GET", "data.php", true);
 ```
-##[GetAddress(lat, lon)]##(https://git.ece.iastate.edu/SE329_Spring2018_Projects/TeamCyclops/trashnet/blob/master/trashnet/site/js/ajax.js)
+# [GetAddress(lat, lon)] #(https://git.ece.iastate.edu/SE329_Spring2018_Projects/TeamCyclops/trashnet/blob/master/trashnet/site/js/ajax.js)
 This is the method that convinces the latitude and longitude into a address.  Right now it only does city and state.  The only problem with code is it is very slow and sometime times out.
 I have done research on this and according to some slack overflow https://stackoverflow.com/questions/3752383/geolocation-is-so-slow-what-im-doing-wrong there not much you can do about it.  So the code might not get used and as of right now it is not being called anywhere.
