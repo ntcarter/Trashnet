@@ -1,50 +1,26 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <style>
-       #map {
+      #map {
         height: 400px;
         width: 100%;
-       }
+      }
     </style>
   </head>
+
   <body>
     <h3>My Google Maps Demo</h3>
     <div id="map"></div>
-    <script>
-      function initMap() {
-
-      //use php to get 2d array
-      //[id][lat][lon][fullness]
-      //[id][lat][...][...]
-      //...
       
-      //create new position for each device
-      var uluru = {lat: -25.363, lng: 131.044};
-      var Ames = {lat: 42.035, lng: -93.620};
-      
-      var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-      });
-
-
-      //create new marker at each position
-      var marker = new google.maps.Marker({
-      position: uluru,
-      map: map
-      });
-
-      var marker2 = new google.maps.Marker({
-      position: Ames,
-      map: map
-      });
-
-            //create a marker cluster from the array of new markers
-      }
+    <script>initMap();
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOrf-sZxhUN6Te4D2SnbGq2eVNjbhTjKA&callback=initMap">
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOrf-sZxhUN6Te4D2SnbGq2eVNjbhTjKA&callback=initMap">
+    </script>
+    <script async defer src="getMapLocation.js">
     </script>
   </body>
+
 </html>
