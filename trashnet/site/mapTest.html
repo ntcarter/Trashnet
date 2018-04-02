@@ -8,19 +8,28 @@
         width: 100%;
       }
     </style>
+
+    <script src="js/getMapLocations.js">
+    </script>
   </head>
 
   <body>
     <h3>My Google Maps Demo</h3>
+
+    <select id="option">
+      <option value="All">All</option>
+      <option value="Full">Full</option>
+      <option value="">Owned By</option>
+    </select>
+
     <div id="map"></div>
-      
-    <script>initMap();
-    </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOrf-sZxhUN6Te4D2SnbGq2eVNjbhTjKA&callback=initMap">
     </script>
-    <script async defer src="getMapLocation.js">
+
+    <script>initMap();
     </script>
+
   </body>
 
 </html>
