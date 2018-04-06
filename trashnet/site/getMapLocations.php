@@ -1,7 +1,7 @@
 <?php
 
 //use http://trashnet.ece.iastate.edu/ConnectTest.php
-$host="trashnet.ece.iastate.edu";
+$host="localhost";
 $port=3306;
 $user="logan";
 $password="ROFLdb!789";
@@ -31,13 +31,13 @@ return $xmlStr;
 //This works, but not quite correctly. Needs to select ONLY the most recent row from events log that 
 //matches the other criteria. Not sure how to do that right now.
 //Also needs to add functionality to narrow the query with parameters $fullnessOption and $ownerOption
-$sql2 = "SELECT registration.UnitId, registration.OwnerId, registration.Latitude, registration.Longitude, registration.Address, eventsLog.EventType 
+$sql = "SELECT registration.UnitId, registration.OwnerId, registration.Latitude, registration.Longitude, registration.Address, eventsLog.EventType 
 FROM registration 
 INNER JOIN eventsLog 
 ON registration.UnitID=eventsLog.UnitId 
 WHERE eventsLog.EventType = 0 OR eventsLog.EventType = 1";
 
-$result = mysqli_query($conn, $sql2);
+$result = mysqli_query($conn, $sql);
 
 if (!$result) {
     die('Invalid query: ' . mysql_error());

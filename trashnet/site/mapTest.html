@@ -14,13 +14,21 @@
   </head>
 
   <body>
-    <h3>My Google Maps Demo</h3>
+    <h1>Map</h1>
+    <h4>Filter Results: </h4>
 
-    <select id="option">
+    Full/Empty:
+    <select id="fullness">  
       <option value="All">All</option>
       <option value="Full">Full</option>
-      <option value="">Owned By</option>
-    </select>
+      <option value="Empty">Empty</option>
+    </select><br>
+
+    Owner Name: 
+    <input type="text" id="owner" list="ownername">
+    <datalist id="ownername">
+      <option value="All owners">
+    </datalist><br><br>
 
     <div id="map"></div>
 
