@@ -19,16 +19,18 @@
 
     Full/Empty:
     <select id="fullness">  
-      <option value="All">All</option>
-      <option value="Full">Full</option>
-      <option value="Empty">Empty</option>
+      <option value="2">All</option>
+      <option value="1">Full</option>
+      <option value="0">Empty</option>
     </select><br>
 
     Owner Name: 
     <input type="text" id="owner" list="ownername">
     <datalist id="ownername">
-      <option value="All owners">
-    </datalist><br><br>
+      <option value="All owners"></option>
+    </datalist><br>
+
+    <input type="button" id="filter" value="Filter"></button><br><br>
 
     <div id="map"></div>
 

@@ -1,70 +1,98 @@
 <?php
 
-//use http://trashnet.ece.iastate.edu/ConnectTest.php
-$host="localhost";
-$port=3306;
-$user="logan";
-$password="ROFLdb!789";
-$dbname="trashnet_db";
+function connectToDB()
+{
 
-// connects to database using the login credentials
-$conn = mysqli_connect($host,$user,$password,$dbname,$port);
+  $host = "localhost";
+  //$host = "trashnet.ece.iastate.edu";
+  $port = 3306;
+  $user = "logan";
+  $password = "ROFLdb!789";
+  $dbname = "trashnet_db";
 
-//tests and checks for a successful connection to the database
-if (!$conn){
-  die("Connection failed: ".mysqli_connect_error());
+  $conn = mysqli_connect($host, $user, $password, $dbname, $port);
+
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  if ($conn) {
+      //echo "Connection successful";
+  }
+
+  return $conn;
 }
-if($conn){
-  //echo "Connection successful";
-}
 
+//This function takes a string returned from the DB and parses to XML
 function parseToXML($htmlStr)
 {
-$xmlStr=str_replace('<','&lt;',$htmlStr);
-$xmlStr=str_replace('>','&gt;',$xmlStr);
-$xmlStr=str_replace('"','&quot;',$xmlStr);
-$xmlStr=str_replace("'",'&#39;',$xmlStr);
-$xmlStr=str_replace("&",'&amp;',$xmlStr);
-return $xmlStr;
+  $xmlStr = str_replace('<', '&lt;', $htmlStr);
+  $xmlStr = str_replace('>', '&gt;', $xmlStr);
+  $xmlStr = str_replace('"', '&quot;', $xmlStr);
+  $xmlStr = str_replace("'", '&#39;', $xmlStr);
+  $xmlStr = str_replace("&", '&amp;', $xmlStr);
+  return $xmlStr;
 }
 
-//This works, but not quite correctly. Needs to select ONLY the most recent row from events log that 
-//matches the other criteria. Not sure how to do that right now.
-//Also needs to add functionality to narrow the query with parameters $fullnessOption and $ownerOption
-$sql = "SELECT registration.UnitId, registration.OwnerId, registration.Latitude, registration.Longitude, registration.Address, eventsLog.EventType 
-FROM registration 
-INNER JOIN eventsLog 
-ON registration.UnitID=eventsLog.UnitId 
-WHERE eventsLog.EventType = 0 OR eventsLog.EventType = 1";
+ $conn = connectToDB();
+
+// $sql;
+// if($ownerOption == 'All') {
+//   $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
+//   FROM registration";
+// } else {
+//  $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
+//  FROM registration
+//  WHERE OwnerId='" . $ownerOption . "' ";
+// }
+
+$sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
+  FROM registration";
 
 $result = mysqli_query($conn, $sql);
 
 if (!$result) {
-    die('Invalid query: ' . mysql_error());
+  die('Invalid query: ' . mysql_error());
 }
-  
-header("Content-type: text/xml");
 
-// Start XML file, echo parent node
+header("Content-type: text/xml");
 echo "<?xml version='1.0' ?>";
 echo '<markers>';
-$ind=0;
-// Iterate through the rows, printing XML nodes for each
-while ($row = @mysqli_fetch_assoc($result)){
-  // Add to XML document node
+
+  // Iterate through the rows, printing XML nodes for each
+while ($row = @mysqli_fetch_assoc($result)) {
+
+  $sql2 = "SELECT EventType FROM eventsLog
+    WHERE (EventType = 0 OR EventType = 1) AND UnitID=" . $row['UnitId'] . "
+    LIMIT 1";
+  $result2 = mysqli_query($conn, $sql2);
+  $eventtype = mysqli_fetch_object($result2);
+
+    // if($fullnessOption == "1") {
+    //   if(!($eventtype->EventType == 1)) {
+    //     continue;
+    //   }
+    // } elseif($fullnessOption == "0") {
+    //   if(!($eventtype->EventType == 0)) {
+    //     continue;
+    //   } 
+    // } else {
+      
+    // }
+
+    // Add to XML document node
   echo '<marker ';
   echo 'UnitId="' . $row['UnitId'] . '" ';
   echo 'OwnerId="' . parseToXML($row['OwnerId']) . '" ';
   echo 'Address="' . parseToXML($row['Address']) . '" ';
   echo 'Latitude="' . $row['Latitude'] . '" ';
   echo 'Longitude="' . $row['Longitude'] . '" ';
-  echo 'Fullness="' . $row['EventType'] . '" ';
-  echo '/>';
-  $ind = $ind + 1;
-}
+  echo 'Fullness="' . $eventtype->EventType . '" ';
 
-// End XML file
+  echo '/>';
+}
 echo '</markers>';
 
+$result->free();
+$result2->free();
 mysqli_close($conn);
 ?>
