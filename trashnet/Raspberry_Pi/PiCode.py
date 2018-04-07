@@ -10,26 +10,26 @@ def distance():
 
 	GPIO.setmode(GPIO.BCM)
 
-	TRIG = 23 
-	ECHO = 24
+	OUTPUT = 23 
+	INPUT = 24
 
 	print "Distance Measurement In Progress"
 
-	GPIO.setup(TRIG,GPIO.OUT)
-	GPIO.setup(ECHO,GPIO.IN)
+	GPIO.setup(OUTPUT,GPIO.OUT)
+	GPIO.setup(INPUT,GPIO.IN)
 
-	GPIO.output(TRIG, False)
+	GPIO.output(OUTPUT, False)
 	print "Waiting For Sensor To Settle"
 	time.sleep(2)
 
-	GPIO.output(TRIG, True)
+	GPIO.output(OUTPUT, True)
 	time.sleep(0.00001)
-	GPIO.output(TRIG, False)
+	GPIO.output(OUTPUT, False)
 
-	while GPIO.input(ECHO)==0:
+	while GPIO.input(INPUT)==0:
   		pulse_start = time.time()
 
-	while GPIO.input(ECHO)==1:
+	while GPIO.input(INPUT)==1:
   		pulse_end = time.time()
 
 	pulse_duration = pulse_end - pulse_start
@@ -100,6 +100,11 @@ def monitor():
 		if(IO.input(14) == False):
 			print("trash is full")
 			db.execute("UPDATE alerts SET full =" + true + ". where Id = " + id + "time = " + time.time())
+		else
+			print("trash has been thrown in")
+			db.execute("INSERT INTO eventsLog (UnitId, EventType, EventTime) VALUES (" + id + ", 3,"  + time.time() + ")")
+
+
 
 def test():
 	print("Hello", flush=True)
@@ -109,3 +114,4 @@ def test():
 	
 while 1:
 	monitor()
+	time.sleep(0.5)
