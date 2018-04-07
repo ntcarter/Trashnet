@@ -70,7 +70,7 @@ def monitor():
 			trash = "full"
 			##sql update
 			try:
-   				cursor.execute("UPDATE binStatus SET Status ='Full' WHERE Id = " + id)
+   				cursor.execute("UPDATE binStatus SET Status ='Full' WHERE UnitId = " + id)
    				conn.commit()
 			except:
    				conn.rollback()
