@@ -99,7 +99,7 @@ def monitor():
 		
 		if(IO.input(14) == False):
 			print("trash is full")
-			db.execute("UPDATE alerts SET full =" + true + ". where Id = " + id + "time = " + time.time())
+			db.execute("UPDATE alerts SET full =3" + ". where Id = " + id + "time = " + time.time())
 		else
 			print("trash has been thrown in")
 			db.execute("INSERT INTO eventsLog (UnitId, EventType, EventTime) VALUES (" + id + ", 3,"  + time.time() + ")")
