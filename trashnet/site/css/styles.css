@@ -15,11 +15,15 @@ body::-webkit-scrollbar-thumb {
   background-color: #FF7A14;
 }
 
-@charset "utf-8";
-/* CSS Document */
-
 .wrapper{
 	max-width: 1020px;
+	margin: 0 auto;
+	/*background: #F3EEEE;*/
+}
+
+.wrapper-stats{
+	max-width: 1600px;
+	width: 85%;
 	margin: 0 auto;
 	/*background: #F3EEEE;*/
 }
@@ -109,7 +113,7 @@ body::-webkit-scrollbar-thumb {
     
 }
 
-.wrapper form{
+.email-form{
 	margin: 0 auto;
 	width: 100%;
 	padding: 50px;
@@ -265,30 +269,95 @@ footer ul li a{
 /******************Table Style*****************/
 .table-body{
 	padding-top: 20px;
+	max-width: 1020px;
+	max-height: 600px;
+	margin: 0 auto;
+	overflow: auto;
 }
 
-.table-body table{
+.table-body-more-info{
+	width: 60%;
+	margin: 0 auto;
+}
+
+.table-body-more-info-inner{
+	width: 60%;
+	margin: 0 auto;
+	max-height: 300px;
+	overflow: auto;
+	margin-bottom: 50px;
+}
+
+.table-body table,
+.table-body-more-info-inner table,
+.table-body-more-info table{
 	margin: 0 auto;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-.table-body th{
+.table-body th,
+.table-body-more-info-inner th,
+.table-body-more-info th{
 	background-color: #FF7A14;
 	color: #fff;
 }
 
-.table-body td, th{
+.table-body td, th,
+.table-body-more-info td, th,
+.table-body-more-info-inner td, th{
 	text-align: left;
 	padding: 10px;
+	border-bottom: 1px solid #FF7A14;
 	/*border: 1px solid #FF7A14;*/
 }
 
-.table-body tr:nth-child(even){
-	background-color: #FF7A14;
-	color: #fff;
+.table-body-more-info-inner td{
+	width: 33%;
 }
+
+.more-info-unit{
+	margin: 0 auto;
+}
+
+.numLink:hover{
+	cursor: pointer;
+	background-color: #FF7A14;
+}
+
+
 /******************END OF Table Style*****************/
+
+/******************More-info**************************/
+
+/******************Graph-section**********************/
+
+.graph-section{
+	height: 600px;
+	padding-top: 80px;
+}
+
+.graph1{
+	width: 48%;
+	display: inline-block;
+}
+
+.graph2{
+	width: 48%;
+	display: inline-block;
+}
+
+.graph-sector{
+	padding: 10px 0 10px 0;
+}
+
+.graph-sector select{
+	width: 300px;
+	padding: 10px;
+	font-size: .8em;
+	font-family: 'Montserrat', sans-serif;
+	border-color: #FF7A14;
+}
 
 
 
