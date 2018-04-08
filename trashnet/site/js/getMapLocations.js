@@ -7,17 +7,15 @@ var customLabel = {
     }
 }
 
-function getData(map, infoWindow) {
+function getLocationData(map, infoWindow) {
 
     //get the search options from the document
     var ownerOption = document.getElementById('owner').value;
     var fullnessOption = document.getElementById('fullness').value;
     if (!ownerOption || ownerOption == "") {
-        console.log("No owner selected");
         ownerOption = 'All';
     }
     if (!fullnessOption || ownerOption == "") {
-        console.log("No fullness level selected");
         fullnessOption = 'Both';
     }
 
@@ -109,5 +107,5 @@ function initMap() {
 
     var infoWindow = new google.maps.InfoWindow;
 
-    getData(map, infoWindow);
+    getLocationData(map, infoWindow);
 }

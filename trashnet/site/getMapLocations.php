@@ -33,20 +33,25 @@ function parseToXML($htmlStr)
   return $xmlStr;
 }
 
- $conn = connectToDB();
+$conn = connectToDB();
 
-// $sql;
-// if($ownerOption == 'All') {
-//   $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
-//   FROM registration";
-// } else {
-//  $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
-//  FROM registration
-//  WHERE OwnerId='" . $ownerOption . "' ";
-// }
+if (defined('STDIN')) {
+  $ownerOption = $argv[1];
+  $fullnessOption = $argv[2];
+} else {
+  $ownerOption = $_GET['ownerOption'];
+  $fullnessOption = $_GET['fullnessOption'];
+}
 
-$sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
+$sql = "";
+if ($ownerOption == 'All') {
+  $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
   FROM registration";
+} else {
+  $sql = "SELECT UnitId, OwnerId, Latitude, Longitude, registration.Address 
+ FROM registration
+ WHERE OwnerId='" . $ownerOption . "' ";
+}
 
 $result = mysqli_query($conn, $sql);
 
@@ -67,17 +72,15 @@ while ($row = @mysqli_fetch_assoc($result)) {
   $result2 = mysqli_query($conn, $sql2);
   $eventtype = mysqli_fetch_object($result2);
 
-    // if($fullnessOption == "1") {
-    //   if(!($eventtype->EventType == 1)) {
-    //     continue;
-    //   }
-    // } elseif($fullnessOption == "0") {
-    //   if(!($eventtype->EventType == 0)) {
-    //     continue;
-    //   } 
-    // } else {
-      
-    // }
+  if ($fullnessOption == "1") {
+    if (!($eventtype->EventType == 1)) {
+      continue;
+    }
+  } elseif ($fullnessOption == "0") {
+    if (!($eventtype->EventType == 0)) {
+      continue;
+    }
+  }
 
     // Add to XML document node
   echo '<marker ';
@@ -86,8 +89,11 @@ while ($row = @mysqli_fetch_assoc($result)) {
   echo 'Address="' . parseToXML($row['Address']) . '" ';
   echo 'Latitude="' . $row['Latitude'] . '" ';
   echo 'Longitude="' . $row['Longitude'] . '" ';
-  echo 'Fullness="' . $eventtype->EventType . '" ';
-
+  if (!($eventtype == null)) {
+    echo 'Fullness="' . $eventtype->EventType . '" ';
+  } else {
+    echo 'Fullness="0" ';
+  }
   echo '/>';
 }
 echo '</markers>';
