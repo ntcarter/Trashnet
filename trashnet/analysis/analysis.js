@@ -56,25 +56,37 @@ function Analysis(){
             //average_times.push(ID_instances);
 
             var totalFillUpTime = 0;
+            var totalTimeTillEmptied = 0;
+            var emptiedOccurances
             var fullOccurances = 0;
             var timeAtEmpty;
+            var timeAtFull; 
             ID_instances.forEach(function(entry){
                 if(entry.EventType == 0){
+                    if(timeAtFull != null){
+                        totalTimeTillEmptied += (Date.parse(entry.EventTime) - timeAtFull);
+                        emptiedOccurances++;
+                    }
+
                     timeAtEmpty = Date.parse(entry.EventTime);
-                    console.log(new Date(entry.EventTime).toString());
+                    //console.log(new Date(entry.EventTime).toString());
                 }else if(entry.EventType == 1 && timeAtEmpty != null){
-                    console.log(new Date(entry.EventTime).toString());
-                    totalFillUpTime += (Date.parse(entry.EventTime) - timeAtEmpty);
-                    timeAtEmpty = null;
-                    fullOccurances++;
+                    if(timeAtEmpty != null){
+                        totalFillUpTime += (Date.parse(entry.EventTime) - timeAtEmpty);
+                        fullOccurances++;
+                    }
+                    
+                    timeAtFull =  Date.parse(entry.EventTime);
+                    
                 }else{
-                    console.log(new Date(entry.EventTime).toString());
+                    //console.log(new Date(entry.EventTime).toString());
                 }
             });
-            var ave_time = totalFillUpTime/fullOccurances;
-            average_times.push({timeInMillis: ave_time,
-                 time: inst.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds(ave_time),
-                id: id});
+            var ave_fillup_time = totalFillUpTime/fullOccurances;
+            var ave_empty_time = totalTimeTillEmptied/emptiedOccurances;
+            average_times.push({Average_Fillup_time: {timeInMillis: ave_fillup_time, time: inst.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds(ave_fillup_time)}, 
+                Average_Empty_Time: {timeInMillis: ave_empty_time, time: inst.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds(ave_empty_time)},
+            ID: entry.id});
             
 
         });
@@ -96,9 +108,4 @@ function Analysis(){
         return {days: days, hours: hours, minutes: minutes, seconds: seconds, milliseconds: millis}
     }
 
-}
-
-function AnalysisObject(){
-
-    
 }
