@@ -1,12 +1,14 @@
 #!/usr/bin/python  
 import time  
-import RPi.GPIO as GPIO  
+import RPi.GPIO as GPIO 
+import datetime
+#Server Connection to MySQL:
+import MySQLdb
+
   
   
-# Use board based pin numbering  
+# SONAR DISTANCE MEASURE  
 GPIO.setmode(GPIO.BOARD)  
-  
-  
 def ReadDistance(pin):  
    GPIO.setup(pin, GPIO.OUT)  
    GPIO.output(pin, 0)  
@@ -37,10 +39,51 @@ def ReadDistance(pin):
    duration=endtime-starttime  
    # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s   
    distance=duration*34000/2  
-   return distance  
+   return distance * .3937
   
-  
+
+
+# SQL CONNECTION
+conn = MySQLdb.connect(host= "trashnet.ece.iastate.edu",user="logan",passwd="ROFLdb!789",db="trashnet_db")
+x = conn.cursor()
+
+
+
+
+id = 1
+trashStatus = "empty"
+lastDistance = 0;
+
 while True:  
-   distance = ReadDistance(11)  
-   print "Distance to object is ",distance," cm or ",distance*.3937, " inches"  
+   distance = ReadDistance(11)   
    time.sleep(.5)  
+   if(lastDistance-distance > 1):
+         print("bin visited")
+         trashStatus = "full"
+         ##sql update
+         try:
+               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 3, " +datetime.datetime.now())
+               conn.commit()
+         except:
+               conn.rollback()
+
+   if(distance < 5 and trashStatus == "empty"):
+         print("trash is full")
+         trashStatus = "full"
+         ##sql update
+         try:
+               cursor.execute("UPDATE binStatus SET Status ='Full' WHERE UnitId = " + id)
+               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 1, " +datetime.datetime.now())
+               conn.commit()
+         except:
+               conn.rollback()
+   if(distance > 5 and trashStatus == "full"):
+         print("trash is emptied")
+         trashStatus = "empty"
+         ##sql update
+         try:
+               cursor.execute("UPDATE binStatus SET Status ='Empty' WHERE UnitId = " + id)
+               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 0, " +datetime.datetime.now())
+               conn.commit()
+         except:
+               conn.rollback()
