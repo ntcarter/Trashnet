@@ -9,7 +9,6 @@ function Analysis(){
         $.get("data.php",function(data, status){
             inst.eventData = JSON.parse(data);
             inst.getIndividualIDs();
-            inst.averageFillUpTimes();
         });
     }
 
@@ -17,7 +16,7 @@ function Analysis(){
         $("#btn").click(function(){
             console.log(inst.eventData);
             console.log(inst.individualIDs);
-
+            console.log(inst.analysis());
         });
     }
     
@@ -43,8 +42,8 @@ function Analysis(){
         return count;
     }
 
-    this.averageFillUpTimes = function(){
-        var average_times = [];
+    this.analysis = function(){
+        var trash_data = [];
 
         inst.individualIDs.forEach(function(id){
             var ID_instances = [];
@@ -55,9 +54,10 @@ function Analysis(){
             });
             //average_times.push(ID_instances);
 
+            var trashThrownArray = new Array(24).fill(0);
             var totalFillUpTime = 0;
             var totalTimeTillEmptied = 0;
-            var emptiedOccurances
+            var emptiedOccurances = 0;
             var fullOccurances = 0;
             var timeAtEmpty;
             var timeAtFull; 
@@ -70,7 +70,7 @@ function Analysis(){
 
                     timeAtEmpty = Date.parse(entry.EventTime);
                     //console.log(new Date(entry.EventTime).toString());
-                }else if(entry.EventType == 1 && timeAtEmpty != null){
+                }else if(entry.EventType == 1){
                     if(timeAtEmpty != null){
                         totalFillUpTime += (Date.parse(entry.EventTime) - timeAtEmpty);
                         fullOccurances++;
@@ -78,24 +78,29 @@ function Analysis(){
                     
                     timeAtFull =  Date.parse(entry.EventTime);
                     
-                }else{
-                    //console.log(new Date(entry.EventTime).toString());
+                }else if(entry.EventType == 3){
+                    var hour = Number(inst.getHour(entry.EventTime));
+                    trashThrownArray[hour]++;
                 }
             });
             var ave_fillup_time = totalFillUpTime/fullOccurances;
             var ave_empty_time = totalTimeTillEmptied/emptiedOccurances;
-            average_times.push({Average_Fillup_time: {timeInMillis: ave_fillup_time, time: inst.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds(ave_fillup_time)}, 
-                Average_Empty_Time: {timeInMillis: ave_empty_time, time: inst.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds(ave_empty_time)},
-            ID: entry.id});
+            trash_data.push({averageFillupTime: {timeInMillis: ave_fillup_time, time: inst.MillisToDaysHrsMinSecMs(ave_fillup_time)}, 
+                averageTimeTillEmptied: {timeInMillis: ave_empty_time, time: inst.MillisToDaysHrsMinSecMs(ave_empty_time)},
+                trashThrownArray: trashThrownArray,
+                unitId: id});
             
 
         });
-        console.log("Average times");
-        console.log(average_times);
+        return trash_data;
         
     }
 
-    this.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds = function(timeSpan){
+    this.getHour = function(date){
+        return date.split(" ")[1].split(":")[0];
+    }
+
+    this.MillisToDaysHrsMinSecMs = function(timeSpan){
         var t = timeSpan;
         var days = Math.floor(t/(24*60*60*1000));
         t = t%(24*60*60*1000);
