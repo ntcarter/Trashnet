@@ -90,7 +90,9 @@ function Analysis(){
             
 
         });
+        console.log("Average times");
         console.log(average_times);
+        
     }
 
     this.MillisTo_Days_Hours_Minutes_Seconds_Milliseconds = function(timeSpan){
