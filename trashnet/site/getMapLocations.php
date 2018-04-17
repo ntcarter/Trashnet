@@ -68,6 +68,7 @@ while ($row = @mysqli_fetch_assoc($result)) {
 
   $sql2 = "SELECT EventType FROM eventsLog
     WHERE (EventType = 0 OR EventType = 1) AND UnitID=" . $row['UnitId'] . "
+	ORDER BY Id DESC
     LIMIT 1";
   $result2 = mysqli_query($conn, $sql2);
   $eventtype = mysqli_fetch_object($result2);

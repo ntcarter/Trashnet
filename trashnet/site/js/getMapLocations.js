@@ -7,15 +7,17 @@ var customLabel = {
     }
 }
 
-function getLocationData(map, infoWindow) {
+function getData(map, infoWindow) {
 
     //get the search options from the document
     var ownerOption = document.getElementById('owner').value;
     var fullnessOption = document.getElementById('fullness').value;
     if (!ownerOption || ownerOption == "") {
+        console.log("No owner selected");
         ownerOption = 'All';
     }
     if (!fullnessOption || ownerOption == "") {
+        console.log("No fullness level selected");
         fullnessOption = 'Both';
     }
 
@@ -88,6 +90,7 @@ function getLocationData(map, infoWindow) {
                     infoWindow.open(map, marker);
                 });
             });
+		//getOwnerList();
         }
     }
 
@@ -107,5 +110,10 @@ function initMap() {
 
     var infoWindow = new google.maps.InfoWindow;
 
-    getLocationData(map, infoWindow);
+    getData(map, infoWindow);
 }
+
+var maps_api  = document.createElement('script');
+maps_api.type = 'text/javascript';
+maps_api.src  = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAOrf-sZxhUN6Te4D2SnbGq2eVNjbhTjKA&callback=initMap';
+document.getElementsByTagName('head')[0].appendChild(maps_api);
