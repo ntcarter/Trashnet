@@ -60,6 +60,7 @@ def ReadDistance(pin):
    distance=duration*34000/2  
    return distance
 
+
 def monitor():
 	if(IO.input(14)==False): #object is near
 		db.execute("INSERT INTO eventsLog (UnitId, EventType, EventTime) VALUES (" + id + ", 3," + datetime.time() +")")
