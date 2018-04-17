@@ -1,10 +1,16 @@
 
 
-function Analysis(){
+function Analysis(data){
     var inst = this;
-    this.eventData;
+    if(data != null){
+        this.eventData;
+    }
+    
     this.individualIDs = [];
 
+    /**
+     * Queries Event Data from the database
+     */
     this.getData = function(){
         $.get("data.php",function(data, status){
             inst.eventData = JSON.parse(data);
@@ -12,6 +18,9 @@ function Analysis(){
         });
     }
 
+    /**
+     * Clicking a button 
+     */
     this.displayData = function(){
         $("#btn").click(function(){
             console.log(inst.eventData);
@@ -42,6 +51,9 @@ function Analysis(){
         return count;
     }
 
+    /**
+     * Analysis of Data
+     */
     this.analysis = function(){
         var trash_data = [];
 
@@ -96,10 +108,18 @@ function Analysis(){
         
     }
 
+    /**
+     * Returns the hour from the given data
+     * @param  date 
+     */
     this.getHour = function(date){
         return date.split(" ")[1].split(":")[0];
     }
 
+    /**
+     * Returns the time-span given in milliseconds converted to a time object with days/hours/minutes/seconds/milliseconds 
+     * @param {*} timeSpan 
+     */
     this.MillisToDaysHrsMinSecMs = function(timeSpan){
         var t = timeSpan;
         var days = Math.floor(t/(24*60*60*1000));
