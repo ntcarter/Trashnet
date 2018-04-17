@@ -10,12 +10,11 @@ function updateOwnerList(data) {
 }
 
 function getOwnerList() {
-    getData("getOwnerList.php", updateOwnerList);
+    getOwnerData("getOwnerList.php", updateOwnerList);
 }
 
-function getData(url, doSomething) {
+function getOwnerData(url, doSomething) {
     //doSomething("Test");
-
     var ajax = new XMLHttpRequest();
 
     ajax.onreadystatechange = function () {
