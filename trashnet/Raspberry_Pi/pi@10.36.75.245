@@ -51,7 +51,7 @@ lastDistance = ReadDistance(11);
 
 while True:  
    distance = ReadDistance(11)   
-   time.sleep(1)  
+   time.sleep(.05)  
    if(lastDistance-distance > 1):
          print("bin visited")
          trashStatus = "full"
