@@ -52,7 +52,7 @@ lastDistance = ReadDistance(11);
 while True:  
    distance = ReadDistance(11)   
    time.sleep(1)  
-   if(lastDistance-distance > 1):
+   if(lastDistance-distance > 4):
          print("bin visited")
          trashStatus = "full"
          ##sql update
