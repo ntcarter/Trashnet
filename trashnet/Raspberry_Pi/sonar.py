@@ -44,54 +44,54 @@ def ReadDistance(pin):
 
 
 # SQL CONNECTION
+## 0 = empty
+## 1 = full
+## 3 = trash thrown 
 
 id = 1
 trashStatus = "empty"
 lastDistance = ReadDistance(11);
 
-while True:  
+while True:
+
    distance = ReadDistance(11)   
    time.sleep(1)  
    if(lastDistance-distance > 4):
          print("bin visited")
-         trashStatus = "full"
-         ##sql update
-         conn = MySQLdb.connect(host= "trashnet.ece.iastate.edu",user="logan",passwd="ROFLdb!789",db="trashnet_db")
-         x = conn.cursor()
+                  
          try:
-               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 3, " +datetime.datetime.now())
+               x.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES (%s, %s, %s)", (id, 3,datetime.datetime.now()))
                conn.commit()
          except:
                conn.rollback()
 
-   if(distance < 5 and trashStatus == "empty"):
+   ##if trash is full
+   if(distance < 5 and trashStatus == "Empty"):
          print("trash is full")
-         trashStatus = "full"
-         ##sql update
-         conn = MySQLdb.connect(host= "trashnet.ece.iastate.edu",user="logan",passwd="ROFLdb!789",db="trashnet_db")
-         x = conn.cursor()
+         trashStatus = "Full"
          try:
-               cursor.execute("UPDATE binStatus SET Status ='Full' WHERE UnitId = " + id)
-               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 1, " +datetime.datetime.now())
+               x.execute("UPDATE binStatus SET Status ='Full' WHERE UnitId = %s", (id,))
+               conn.commit()
+               x.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES (%s, %s, %s)", (id, 1,datetime.datetime.now()))
                conn.commit()
          except:
                conn.rollback()
-         
-         conn.close()
-         print("done")
-   if(distance > 5 and trashStatus == "full"):
+   
+   ##trash is emptied              
+   if(distance > 12 and trashStatus == "Full"):
          print("trash is emptied")
-         trashStatus = "empty"
+         trashStatus = "Empty"
          ##sql update
          conn = MySQLdb.connect(host= "trashnet.ece.iastate.edu",user="logan",passwd="ROFLdb!789",db="trashnet_db")
          x = conn.cursor()
          try:
-               cursor.execute("UPDATE binStatus SET Status ='Empty' WHERE UnitId = " + id)
-               cursor.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES(" + id + ", 0, " +datetime.datetime.now())
+               x.execute("UPDATE binStatus SET Status ='Empty' WHERE UnitId = %s", (id,))
+               conn.commit()
+               x.execute("INSERT INTO binStatus (UnitId, EventType, EventTime) VALUES (%s, %s, %s)", (id, 1,datetime.datetime.now()))
                conn.commit()
                
          except:
                conn.rollback()
 
-         conn.close()
-         print("done")
+   conn.close()
+   print("-----------------------")

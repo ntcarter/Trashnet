@@ -9,6 +9,7 @@ id = 1
 status = "full"
 try:
    x.execute("INSERT INTO eventsLog (UnitId, EventType, EventTime) VALUES (%s, %s, %s)", (id, status, time))
+   conn.commit()
    x.execute("UPDATE binStatus SET Status ='Full' WHERE UnitId = " + id)
    conn.commit()
 except:
