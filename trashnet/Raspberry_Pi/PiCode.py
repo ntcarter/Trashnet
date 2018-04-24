@@ -4,45 +4,10 @@ import sqlite3
 import datetime
 #Server Connection to MySQL:
 import MySQLdb
+import sonar.py
 
 ##SONAR
 import RPi.GPIO as GPIO
-
-def distance():
-
-	GPIO.setmode(GPIO.BCM)
-
-	OUTPUT = 23 
-	INPUT = 24
-
-	print "Distance Measurement In Progress"
-
-	GPIO.setup(OUTPUT,GPIO.OUT)
-	GPIO.setup(INPUT,GPIO.IN)
-
-	GPIO.output(OUTPUT, False)
-	print "Waiting For Sensor To Settle"
-	time.sleep(2)
-
-	GPIO.output(OUTPUT, True)
-	time.sleep(0.00001)
-	GPIO.output(OUTPUT, False)
-
-	while GPIO.input(INPUT)==0:
-  		pulse_start = time.time()
-
-	while GPIO.input(INPUT)==1:
-  		pulse_end = time.time()
-
-	pulse_duration = pulse_end - pulse_start
-
-	distance = pulse_duration * 17150
-
-	distance = round(distance, 2)
-
-	print "Distance:",distance,"cm"
-	GPIO.cleanup()
-	return distance
 
 ##
 ##IO.setwarnings(False)
@@ -58,6 +23,43 @@ cursor = conn.cursor()
 status = "empty";
 id = 1
 ##full = false
+
+
+GPIO.setmode(GPIO.BOARD)  
+  
+  
+def ReadDistance(pin):  
+   GPIO.setup(pin, GPIO.OUT)  
+   GPIO.output(pin, 0)  
+  
+   time.sleep(0.000002)  
+  
+  
+   #send trigger signal  
+   GPIO.output(pin, 1)  
+  
+  
+   time.sleep(0.000005)  
+  
+  
+   GPIO.output(pin, 0)  
+  
+  
+   GPIO.setup(pin, GPIO.IN)  
+  
+  
+   while GPIO.input(pin)==0:  
+      starttime=time.time()  
+  
+  
+   while GPIO.input(pin)==1:  
+      endtime=time.time()  
+        
+   duration=endtime-starttime  
+   # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s   
+   distance=duration*34000/2  
+   return distance
+
 
 def monitor():
 	if(IO.input(14)==False): #object is near
