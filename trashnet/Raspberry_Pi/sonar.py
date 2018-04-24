@@ -42,6 +42,8 @@ def ReadDistance(pin):
    return distance * .3937
 
 
+lastDistance = ReadDistance(11)
+status = ""
 
 # SQL CONNECTION
 ## 0 = empty
@@ -63,7 +65,7 @@ while True:
                conn.rollback()
 
    ##if trash is full
-   if(distance < 5 and trashStatus != "Empty"):
+   if(distance < 5 and trashStatus != "Full"):
          print("trash is full")
          trashStatus = "Full"
          lastDistance = distance
@@ -76,7 +78,7 @@ while True:
                conn.rollback()
 
    ##trash is emptied
-   if(distance > 12 and trashStatus != "Full"):
+   if(distance > 12 and trashStatus != "Empty"):
          print("trash is emptied")
          trashStatus = "Empty"
          lastDistance = distance
